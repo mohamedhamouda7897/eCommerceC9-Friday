@@ -12,6 +12,7 @@ import '../../../../core/utils/components/space.dart';
 import '../../../../core/utils/components/text_field.dart';
 import '../bloc/signup_bloc.dart';
 
+// ignore: must_be_immutable, use_key_in_widget_constructors
 class SignupScreen extends StatelessWidget {
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
@@ -27,7 +28,7 @@ class SignupScreen extends StatelessWidget {
           if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
-              builder: (context) => AlertDialog(
+              builder: (context) => const AlertDialog(
                 title: Center(child: CircularProgressIndicator()),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -37,13 +38,13 @@ class SignupScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text("Error"),
+                title: const Text("Error"),
                 content: Text(state.failures?.message ?? ""),
               ),
             );
           } else if (state.status == ScreenStatus.success) {
             Navigator.pushNamedAndRemoveUntil(
-                context, RoutesName.home, (route) => false);
+                context, Routes.homeLayout, (route) => false);
           }
         },
         builder: (context, state) {

@@ -34,4 +34,16 @@ class HomeRemoteDSImpl implements HomeRemoteDS {
       return Left(RemoteFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failures, CategoryAndBrandModel>> getOffers() async {
+    try {
+      Response response = await apiManager.getData(EndPoints.getOffers);
+      CategoryAndBrandModel model =
+          CategoryAndBrandModel.fromJson(response.data);
+      return Right(model);
+    } catch (e) {
+      return Left(RemoteFailure(message: e.toString()));
+    }
+  }
 }

@@ -1,42 +1,50 @@
-import 'package:e_commerce_c9_friday/features/home/presentation/pages/home.dart';
-import 'package:e_commerce_c9_friday/features/login/presentation/pages/login.dart';
-import 'package:e_commerce_c9_friday/features/signup/presentation/pages/signup.dart';
 import 'package:flutter/material.dart';
 
-class RoutesName {
-  static const String login = "/";
-  static const String signup = "signup";
-  static const String home = "home";
+import '../../core/utils/app_strings.dart';
+import '../../core/utils/app_styles.dart';
+import '../../features/home layout/presentation/pages/home_layout.dart';
+import '../../features/login/presentation/pages/login.dart';
+import '../../features/signup/presentation/pages/signup.dart';
+import '../../features/splach/presentation/pages/splach_screen.dart';
+
+class Routes {
+  static const String splach = '/';
+  static const String homeLayout = 'home';
+  static const String login = 'login';
+  static const String signUp = 'signUp';
 }
 
-class AppRoutes {
-  static Route onGenerate(RouteSettings settings) {
+class RouteGenerator {
+  static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
-      case RoutesName.login:
-        return MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        );
-      case RoutesName.signup:
-        return MaterialPageRoute(
-          builder: (context) => SignupScreen(),
-        );
-      case RoutesName.home:
-        return MaterialPageRoute(
-          builder: (context) => HomeScreen(),
-        );
+      case Routes.splach:
+        return MaterialPageRoute(builder: (_) => const SplachScreen());
+      case Routes.homeLayout:
+        return MaterialPageRoute(builder: (_) => const HomeLayout());
+      case Routes.login:
+        return MaterialPageRoute(builder: (_) => LoginScreen());
+      case Routes.signUp:
+        return MaterialPageRoute(builder: (_) => SignupScreen());
       default:
-        return MaterialPageRoute(
-          builder: (context) => unDefineRoute(),
-        );
+        return unDefinedScreen();
     }
   }
 
-  static Widget unDefineRoute() {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("UnDefine"),
-      ),
-      body: Center(child: Text("Something went wrong")),
-    );
+  static Route<dynamic> unDefinedScreen() {
+    return MaterialPageRoute(
+        builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  AppStrings.noRoute,
+                  style: AppStyles.titleStyle,
+                ),
+              ),
+              body: Center(
+                child: Text(
+                  AppStrings.noRoute,
+                  style: AppStyles.titleStyle,
+                ),
+              ),
+            ));
   }
 }

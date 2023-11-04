@@ -1,14 +1,18 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:e_commerce_c9_friday/core/api/api_manager.dart';
 import 'package:e_commerce_c9_friday/features/home/data/data_sources/remote/home_remote_ds_impl.dart';
 import 'package:e_commerce_c9_friday/features/home/data/repositories/home_repo_impl.dart';
 import 'package:e_commerce_c9_friday/features/home/domain/use_cases/get_brands_usecase.dart';
 import 'package:e_commerce_c9_friday/features/home/domain/use_cases/get_categories_usecase.dart';
+import 'package:e_commerce_c9_friday/features/home/domain/use_cases/get_offers_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/app_styles.dart';
+import '../../../../core/utils/components/cart.dart';
 import '../../../../core/utils/components/route_logo.dart';
 import '../../../../core/utils/components/search_bar.dart';
 import '../../../../core/utils/components/space.dart';
@@ -17,6 +21,7 @@ import '../widgets/carousel_slider.dart';
 import '../widgets/grid_view.dart';
 import '../widgets/list_view.dart';
 
+// ignore: use_key_in_widget_constructors
 class HomeScreen extends StatelessWidget {
   var searchBarController = TextEditingController();
 
@@ -24,21 +29,22 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeBloc(
-        GetBrandsUseCase(
-          HomeRepoImpl(
-            HomeRemoteDSImpl(
-              ApiManager(),
+          GetBrandsUseCase(
+            HomeRepoImpl(
+              HomeRemoteDSImpl(
+                ApiManager(),
+              ),
             ),
           ),
-        ),
-        GetCategoriesUseCase(
-          HomeRepoImpl(
-            HomeRemoteDSImpl(ApiManager()),
+          GetCategoriesUseCase(
+            HomeRepoImpl(
+              HomeRemoteDSImpl(ApiManager()),
+            ),
           ),
-        ),
-      )
+          GetOffersUseCase(HomeRepoImpl(HomeRemoteDSImpl(ApiManager()))))
         ..add(GetCategoriesEvent())
-        ..add(GetBrandsEvent()),
+        ..add(GetBrandsEvent()) //..add(GetOffersEvent())
+      ,
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -62,12 +68,12 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {},
                         ),
                         const HorizontalSpace(24),
-                        // const Cart(),
+                        const Cart(),
                         const HorizontalSpace(17),
                       ],
                     ),
                     const VerticalSpace(16),
-                    const CarouselSliderR(),
+                    // CarouselSliderR(state.offers ?? []),
                     const VerticalSpace(24),
                     Padding(
                       padding: REdgeInsets.symmetric(horizontal: 8.0),

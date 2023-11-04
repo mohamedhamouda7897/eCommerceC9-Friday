@@ -12,6 +12,7 @@ import '../../../../core/utils/components/space.dart';
 import '../../../../core/utils/components/text_field.dart';
 import '../../../signup/presentation/bloc/signup_bloc.dart';
 
+// ignore: use_key_in_widget_constructors, must_be_immutable
 class LoginScreen extends StatelessWidget {
   var passwordController = TextEditingController();
   var userNameController = TextEditingController();
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
           if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
-              builder: (context) => AlertDialog(
+              builder: (context) => const AlertDialog(
                 title: Center(child: CircularProgressIndicator()),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -35,13 +36,13 @@ class LoginScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text("Error"),
+                title: const Text("Error"),
                 content: Text(state.failures?.message ?? ""),
               ),
             );
           } else if (state.status == ScreenStatus.success) {
             Navigator.pushNamedAndRemoveUntil(
-                context, RoutesName.home, (route) => false);
+                context, Routes.homeLayout, (route) => false);
           }
         },
         builder: (context, state) {
@@ -120,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushReplacementNamed(
-                              context, RoutesName.signup);
+                              context, Routes.signUp);
                         },
                         child: Text(
                           AppStrings.haveAccount,
