@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:e_commerce_c9_friday/features/home/domain/entities/CategoryAndBrandEntity.dart';
 
 class CategoryAndBrandModel extends CategoryAndBrandEntity {

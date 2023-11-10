@@ -6,3 +6,5 @@ abstract class HomeEvent {}
 class GetBrandsEvent extends HomeEvent {}
 
 class GetCategoriesEvent extends HomeEvent {}
+
+class GetOffersEvent extends HomeEvent {}

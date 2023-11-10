@@ -19,4 +19,9 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failures, CategoryAndBrandEntity>> getCategories() {
     return homeRemoteDSImpl.getCategories();
   }
+
+  @override
+  Future<Either<Failures, CategoryAndBrandEntity>> getOffers() {
+    return homeRemoteDSImpl.getOffers();
+  }
 }
